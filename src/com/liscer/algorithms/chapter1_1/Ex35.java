@@ -4,7 +4,10 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class Ex35 {
-
+	/**
+	 * 模拟投骰子
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		/*int SIDES = 6;
 		double[] dist = new double[2 * SIDES + 1];
@@ -143,13 +146,14 @@ public class Ex35 {
 			
 		}
 		System.out.println();
-		int N = StdIn.readInt();
+//============分界线上面是理论数据,下面是实验=======================
+		int N = StdIn.readInt();//N 扔多少次骰子,100万次
 		int[] num = new int[SIDES*2+1];
 		for (int i = 0; i < N; i++) {
-			num[StdRandom.discrete(disk)]++;
+			num[StdRandom.discrete(disk)]++;//从指定的离散分布返回一个随机整数。
 		}
 		double temp;
-		boolean isAcc = true;
+		boolean isAcc = true;//是否吻合到三位小数
 		System.out.print("实验数据");
 		for (int i = 2; i <= SIDES*2; i++) {
 			temp = (double)num[i]/N;
