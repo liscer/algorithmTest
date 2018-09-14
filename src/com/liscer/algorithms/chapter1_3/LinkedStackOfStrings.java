@@ -1,8 +1,9 @@
 package com.liscer.algorithms.chapter1_3;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedStackOfStrings <Item>{
+public class LinkedStackOfStrings <Item> implements Iterable<Item>{
 
 	private Node first;
 	private int n;
@@ -51,14 +52,22 @@ public class LinkedStackOfStrings <Item>{
 	}
 
 	
-	public void display() {
-		Node node = first;
-		while (first != null) {
-			System.out.println("data: " + first.item);
-			first = first.next;
+//	public void display() {
+//		Node node = first;
+//		while (first != null) {
+//			System.out.println("data: " + first.item);
+//			first = first.next;
+//		}
+//		first = node;
+//		node = null;
+//	}
+	@Override
+	public String toString() {
+		StringBuffer sBuffer = new StringBuffer();
+		for (Item item : this) {
+			sBuffer.append(item+" ");
 		}
-		first = node;
-		node = null;
+		return sBuffer.toString();
 	}
 
 	public static void main(String[] args) {
@@ -68,6 +77,31 @@ public class LinkedStackOfStrings <Item>{
 		linkedStack.push("def");
 		linkedStack.display();
 
+	}
+
+	@Override
+	public Iterator<Item> iterator() {
+		return new ListIterator();
+	}
+	
+	private class ListIterator implements Iterator<Item>{
+		private Node current =first;
+
+		@Override
+		public boolean hasNext() {
+			return current !=null;
+		}
+
+		@Override
+		public Item next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			Item item = current.item;
+			current = current.next;
+			return item;
+		}
+		
 	}
 
 }
