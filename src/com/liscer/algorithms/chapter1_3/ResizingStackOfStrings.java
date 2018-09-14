@@ -15,8 +15,8 @@ public class ResizingStackOfStrings {
 	public void push(String item) {
 		if (N == s.length) {
 			resize(s.length * 2);
-			s[N++]=item;
 		}
+		s[N++]=item;
 	}
 	public String pop() {
 		//考虑对象游离
@@ -28,7 +28,7 @@ public class ResizingStackOfStrings {
 		return item;
 	}
 	
-	public void resize(int max){
+	private void resize(int max){
 		String[] copy = new String[max];
 		for (int i = 0; i < N; i++) {
 			copy[i]= s[i];
