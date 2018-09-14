@@ -1,29 +1,53 @@
 package com.liscer.algorithms.chapter1_3;
 
-public class LinkedStackOfStrings {
+import java.util.NoSuchElementException;
 
-	private Node first = null;
+public class LinkedStackOfStrings <Item>{
+
+	private Node first;
+	private int n;
+	
+	public LinkedStackOfStrings(){
+		first = null;
+		n = 0;
+	}
 
 	private class Node {
-		String item;
+		Item item;
 		Node next;
 	}
 
 	public boolean isEmpty() {
 		return first == null;
 	}
+	
+	public int size(){
+		return n;
+	}
 
-	public void push(String item) {
+	public void push(Item item) {
 		Node oldNode = first;
 		first = new Node();
 		first.item = item;
 		first.next = oldNode;
+		n++;
 	}
 
-	public String pop() {
-		String item = first.item;
+	public Item pop() {
+		if (isEmpty()) {
+			throw new NoSuchElementException("Stack underflow");
+		}
+		Item item = first.item;
 		first = first.next;
+		n--;
 		return item;
+	}
+	
+	public Item peek(){
+		if (isEmpty()) {
+			throw new NoSuchElementException("Stack underflow");
+		}
+		return first.item;
 	}
 
 	
