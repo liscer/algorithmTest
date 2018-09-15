@@ -3,12 +3,12 @@ package com.liscer.algorithms.chapter1_3;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedStackOfStrings <Item> implements Iterable<Item>{
+public class LinkedStack<Item> implements Iterable<Item> {
 
 	private Node first;
 	private int n;
-	
-	public LinkedStackOfStrings(){
+
+	public LinkedStack() {
 		first = null;
 		n = 0;
 	}
@@ -21,8 +21,8 @@ public class LinkedStackOfStrings <Item> implements Iterable<Item>{
 	public boolean isEmpty() {
 		return first == null;
 	}
-	
-	public int size(){
+
+	public int size() {
 		return n;
 	}
 
@@ -43,53 +43,50 @@ public class LinkedStackOfStrings <Item> implements Iterable<Item>{
 		n--;
 		return item;
 	}
-	
-	public Item peek(){
+
+	public Item peek() {
 		if (isEmpty()) {
 			throw new NoSuchElementException("Stack underflow");
 		}
 		return first.item;
 	}
 
-	
-//	public void display() {
-//		Node node = first;
-//		while (first != null) {
-//			System.out.println("data: " + first.item);
-//			first = first.next;
-//		}
-//		first = node;
-//		node = null;
-//	}
+	// public void display() {
+	// Node node = first;
+	// while (first != null) {
+	// System.out.println("data: " + first.item);
+	// first = first.next;
+	// }
+	// first = node;
+	// node = null;
+	// }
 	@Override
 	public String toString() {
-		StringBuffer sBuffer = new StringBuffer();
-		for (Item item : this) {
-			sBuffer.append(item+" ");
-		}
-		return sBuffer.toString();
+		StringBuilder s = new StringBuilder();
+		for (Item item : this)
+			s.append(item + " ");
+		return s.toString();
 	}
 
 	public static void main(String[] args) {
-		LinkedStackOfStrings linkedStack = new LinkedStackOfStrings();
+		LinkedStack<String> linkedStack = new LinkedStack<>();
 		linkedStack.push("abc");
 		linkedStack.push("def");
 		linkedStack.push("def");
-		linkedStack.display();
-
+		System.out.println(linkedStack.toString());
 	}
 
 	@Override
 	public Iterator<Item> iterator() {
 		return new ListIterator();
 	}
-	
-	private class ListIterator implements Iterator<Item>{
-		private Node current =first;
+
+	private class ListIterator implements Iterator<Item> {
+		private Node current = first;
 
 		@Override
 		public boolean hasNext() {
-			return current !=null;
+			return current != null;
 		}
 
 		@Override
@@ -101,7 +98,7 @@ public class LinkedStackOfStrings <Item> implements Iterable<Item>{
 			current = current.next;
 			return item;
 		}
-		
+
 	}
 
 }
