@@ -72,8 +72,8 @@ public class ResizingStack<Item> implements Iterable<Item>{
 			}
 			return s[index--];
 		}
-		
 	}
+	
 	public static void main(String[] args) {
 		ResizingStack<String> a = new ResizingStack<>(5);
 		a.push("q");
@@ -81,7 +81,5 @@ public class ResizingStack<Item> implements Iterable<Item>{
 		a.push("e");
 		a.push("r");
 		System.out.println(a.toString());
-		
 	}
-
 }

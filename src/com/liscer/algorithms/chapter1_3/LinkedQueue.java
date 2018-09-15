@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 
-
 public class LinkedQueue<Item> implements Iterable<Item> {
 	
 	private Node first;
@@ -98,6 +97,4 @@ public class LinkedQueue<Item> implements Iterable<Item> {
 		System.out.println(linkedQueue.toString());
 
 	}
-
-
 }
