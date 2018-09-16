@@ -2,7 +2,13 @@ package com.liscer.algorithms.chapter1_3;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
+/**
+ * 数组实现队列,出列操作如果每次都去掉第一个元素,每次每个元素都要移位,解决方案是纪录第一个元素,出列时first指向下一个元素,
+ * 所以a[first]可能不是数组的第一个元素.带来了一个问题就是增长数组的时候
+ * @author libaojia
+ *
+ * @param <Item>
+ */
 public class ResizingQueue<Item> implements Iterable<Item> {
 	
 	private Item[] a ;
@@ -28,11 +34,11 @@ public class ResizingQueue<Item> implements Iterable<Item> {
 	private void resize(int max) {
 		Item[] temp = (Item[])new Object[max];
 		for (int i = 0; i < N; i++) {
-			temp[i] = a[(first +i)%a.length];
-		}
-		a = temp;
-		first = 0;
-		last = N;
+			temp[i] = a[(first +i)%a.length];//执行出列操作的时候,first会移动,进行数组扩充的时候,temp数组即要复制到的数组
+		}                                    //temp[0]=temp[first+0],temp[1]=temp[first+1]...
+		a = temp;                        //到了a[temp[a.length-first]元素时,需要元素值为零,用a[(first +i)%a.length]
+		first = 0;                       //刚好满足,因为a[a.length-first]之前的元素都进型出列操作,都被赋值为0;
+		last = N; 
 	}
 
 	public void enqueue(Item item) {
@@ -105,7 +111,9 @@ public class ResizingQueue<Item> implements Iterable<Item> {
 		ResizingQueue<String> resizingQueue = new ResizingQueue<>();
 		resizingQueue.enqueue("asd");
 		resizingQueue.enqueue("eee");
-		resizingQueue.enqueue("rrrr");
+		resizingQueue.dequeue();
+		resizingQueue.enqueue("vvvv");
+		resizingQueue.enqueue("uuuu");
 		System.out.println(resizingQueue.toString());
 	}
 
