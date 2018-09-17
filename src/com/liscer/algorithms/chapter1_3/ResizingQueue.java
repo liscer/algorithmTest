@@ -21,6 +21,135 @@ public class ResizingQueue<Item> implements Iterable<Item>{
 	private int last;
 	private int N;
 	
+	public ResizingQueue(){
+		a = (Item[])new Object[2];
+		first= 0;
+		last = 0;
+		N= 0;
+	}
+	
+	public boolean isEmpty(){
+		return N == 0;
+	}
+	
+	public int size(){
+		return N;
+	}
+	
+	public void resize(int caption){
+		Item[] temp = (Item[])new Object[caption];
+		for (int i = 0; i < N; i++) {
+			temp[i] = a[(first+i)%a.length];	
+		}
+		a = temp;
+		first = 0;
+		last = N;
+	}
+	
+	public void enqueue(Item item){
+		if (N == a.length) {
+			resize(a.length*2);
+		}
+		a[last++] = item;
+		N++;
+		if (last == a.length) {
+			last = 0;
+		}
+	}
+	
+	public Item dequeue(){
+		if (isEmpty()) {
+			throw new NoSuchElementException("queue underflow");
+		}
+		Item item = a[first];
+		a[first] = null;
+		first++;
+		N--;
+		if (first == a.length) {
+			first =0;
+		}
+		if (N >0 && N==a.length/4) {
+			resize(a.length/2);
+		}
+		return item;
+	}
+	
+	public Item peek(){
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		return a[first];
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sBuilder = new StringBuilder();
+		for (Item item : this) {
+			sBuilder.append(item+" ");
+		}
+		return sBuilder.toString();
+	}
+
+	@Override
+	public Iterator<Item> iterator() {
+		return new ListIterator();
+	}
+	
+	private class ListIterator implements Iterator<Item> {
+		private int i = 0;
+
+		@Override
+		public boolean hasNext() {
+			return i < N;
+		}
+
+		@Override
+		public Item next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException("o");
+			}
+			Item item = a[(first+i)%a.length];
+			i++;
+			return item;
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		ResizingQueue<String> resizingQueue = new ResizingQueue<>();
+		resizingQueue.enqueue("asd");
+		resizingQueue.enqueue("eee");
+		resizingQueue.enqueue("vvvv");
+		resizingQueue.enqueue("uuuu");
+		resizingQueue.enqueue("qqqqqq");
+		resizingQueue.enqueue("qqqqqq");
+		resizingQueue.enqueue("qqqqqq");
+		//resizingQueue.enqueue("qqqqqq");
+		resizingQueue.dequeue();
+		resizingQueue.dequeue();
+		resizingQueue.dequeue();
+		resizingQueue.dequeue();
+		resizingQueue.enqueue("bbbbbb");
+		resizingQueue.enqueue("rrrr");
+		System.out.println(resizingQueue.toString());
+	}
+	
+}
+
+
+
+
+
+
+
+
+/*public class ResizingQueue<Item> implements Iterable<Item>{
+	
+	private Item[] a;
+	private int first;
+	private int last;
+	private int N;
+	
 	public ResizingQueue() {
 		a = (Item[])new Object[2];
 		first = 0;
@@ -138,7 +267,7 @@ public class ResizingQueue<Item> implements Iterable<Item>{
 		System.out.println(resizingQueue.toString());
 	}
 	
-}
+}*/
 
 
 
