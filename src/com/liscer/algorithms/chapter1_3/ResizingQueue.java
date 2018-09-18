@@ -8,7 +8,7 @@ import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 import edu.princeton.cs.algs4.Queue;
 
 /**
- * 数组实现队列,出列操作如果每次都去掉第一个元素,每次每个元素都要移位,解决方案是纪录第一个元素,出列时first指向下一个元素,
+ * 动态数组实现队列,出列操作如果每次都去掉第一个元素,每次每个元素都要移位,解决方案是纪录第一个元素,出列时first指向下一个元素,
  * 所以a[first]可能不是数组的第一个元素.带来了一个问题就是增长数组的时候,拷贝给新数组的下标(first+i)%a.length解决
  * @author libaojia
  *

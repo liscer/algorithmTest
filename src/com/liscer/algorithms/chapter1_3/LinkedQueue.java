@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
  *
  * @param <Item>
  */
+//第三次练习
 public class LinkedQueue<Item> implements Iterable<Item>{
 	
 	private Node first;

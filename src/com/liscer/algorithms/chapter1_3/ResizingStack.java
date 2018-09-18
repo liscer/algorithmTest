@@ -3,12 +3,121 @@ package com.liscer.algorithms.chapter1_3;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
- * 数组实现栈 有泛型和迭代器
+ * 动态数组实现栈 有泛型和迭代器
  * @author libaojia
  *
  * @param <Item>
  */
-public class ResizingStack<Item> implements Iterable<Item> {
+//第三次练习
+
+public class ResizingStack<Item> implements Iterable<Item>{
+	
+	private Item[] a;
+	private int N;
+	
+	public ResizingStack(){
+		a = (Item[])new Object[2];
+		N = 0;
+	}
+	
+	public boolean isEmpty(){
+		return N <0;
+	}
+	
+	public int size(){
+		return N;
+	}
+	
+	private void resize(int caption){
+		Item[] temp = (Item[])new Object[caption];
+		for (int i = 0; i < N; i++) {
+			temp[i] = a[i];
+		}
+		a = temp;
+	}
+	
+	public void push(Item item){
+		if (N==a.length) {
+			resize(a.length*2);
+		}
+		a[N++]=item;
+	}
+	
+	public Item pop(){
+		if (isEmpty()) {
+			throw new NoSuchElementException("stack underfolw");
+		}
+		Item item = a[--N];
+		a[N] = null;
+		if (N == a.length/4){
+			resize(a.length/2);
+		}
+		return item;
+	}
+	
+	public Item peek(){
+		if (isEmpty()) {
+			throw new NoSuchElementException("stack underflow");
+		}
+		return a[N-1];
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sBuilder = new StringBuilder();
+		for (Item item : this) {
+			sBuilder.append(item + " ");
+		}
+		return sBuilder.toString();
+	}
+
+	@Override
+	public Iterator<Item> iterator() {
+		return new ListIterator();
+	}
+	
+	private class ListIterator implements Iterator<Item>{
+		private int index = N-1;
+
+		@Override
+		public boolean hasNext() {
+			return index>=0;
+		}
+
+		@Override
+		public Item next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			return a[index--];
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		ResizingStack<String> a = new ResizingStack<>();
+		a.push("q");
+		a.push("w");
+		a.push("e");
+		a.pop();
+		a.push("r");
+		System.out.println("peek = " + a.peek());
+
+		System.out.println(a.toString() + "size = " + a.size());
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+/*public class ResizingStack<Item> implements Iterable<Item> {
 
 	private Item[] a;
 	private int N;
@@ -108,7 +217,7 @@ public class ResizingStack<Item> implements Iterable<Item> {
 		System.out.println(a.toString() + "size = " + a.size());
 	}
 
-}
+}*/
 
 /*
  * public class ResizingStack<Item> implements Iterable<Item>{
