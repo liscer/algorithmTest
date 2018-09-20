@@ -3,13 +3,12 @@ package com.liscer.algorithms.chapter1_3;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import sun.net.www.content.audio.x_aiff;
 /**
  * 单向链表实现 从后面添加,从后面删除
  * @author libaojia
  *
  */
-public class SinglyLinkedList<Item> implements Iterable<Item> {
+public class SinglyLinkedList<Item> implements Iterable<Item>{
 	
 	private Node head;
 	private int N;
@@ -38,17 +37,21 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
 	
 	public void add(Item item){
 		Node node = new Node(item);
-		Node temp= head;
-		while(temp.next != null){
-			temp = temp.next;
+		if (head == null) {
+			head = node;
+		}else {
+			Node temp= head;
+			while(temp.next != null){
+				temp = temp.next;
+			}
+			temp.next = node;
 		}
-		temp.next = node;
 		N++;
 	}
 	
-	public Item remove(){
+	public void remove(){
 		if (N== 0) {
-			return 
+			throw new NoSuchElementException("Linked underflow");
 		}
 		if (N== 1) {
 			head = null;
@@ -59,15 +62,37 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
 			}
 		}
 		N--;
-		
-		
+	}
+	
+	public void delete(int k) {
+		if (k==0 || k >=N) {
+			throw new NoSuchElementException("k out");
+		}
+		int n = 1;
+		Node temp = head;
+		while(temp!=null){
+			if (k == n++) {
+				temp.next = temp.next.next;
+				N--;
+				return;
+			}
+			temp = temp.next;
+		}
+	}
+	
+	public  boolean find(SinglyLinkedList<Item> linked, Item key) {
+		Node temp = linked.head;
+		while(temp!=null){
+			if (key.equals(temp.item)) {
+				return false;
+			}
+			temp = temp.next;
+		}
+		return false;
 	}
 	
 	public Item peek(){
-		if (isEmpty()) {
-			throw new NoSuchElementException("queue underflow");
-		}
-		return first.item;
+		return null;
 	}
 	
 	@Override
@@ -85,7 +110,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
 	}
 	
 	private class ListIterator implements Iterator<Item>{
-		private Node current = first;
+		private Node current = head ;
 
 		@Override
 		public boolean hasNext() {
@@ -105,6 +130,16 @@ public class SinglyLinkedList<Item> implements Iterable<Item> {
 	}
 	
 	public static void main(String[] args) {
+		SinglyLinkedList<String> linkedList = new SinglyLinkedList<>();
+		linkedList.add("aaa");
+		linkedList.add("bbb");
+		linkedList.add("ccc");
+		linkedList.add("ddd");
+		linkedList.add("eee");
+		//linkedList.remove();
+		linkedList.delete(3);
+		System.out.println(linkedList.N);
+		System.out.println(linkedList.toString());
 	}
 
 }
