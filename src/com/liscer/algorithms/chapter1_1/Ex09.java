@@ -1,9 +1,20 @@
 package com.liscer.algorithms.chapter1_1;
 
+import java.util.Stack;
+
 public class Ex09 {
 
 	public static void main(String[] args) {
-		System.out.println(toBinaryString(6));
+		//System.out.println(toBinaryString(6));
+		int N = 6;
+		Stack<Integer> stack = new Stack<>();
+		while (N >0){
+			stack.push(N%2);
+			N /=2;
+		}
+		for (Integer integer : stack) {
+			System.out.println(integer + " ");
+		}
 
 	}
 	
@@ -23,6 +34,18 @@ public class Ex09 {
 			N /= 2;
 		}
 		return s;
+	}
+	
+	public static String toBinaryString1(int N){
+		Stack<Integer> stack = new Stack<>();
+		while (N >0){
+			stack.push(N%2);
+			N /=2;
+		}
+		for (Integer integer : stack) {
+			
+		}
+		return stack.toString();
 	}
 
 }

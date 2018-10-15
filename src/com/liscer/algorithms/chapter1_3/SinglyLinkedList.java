@@ -101,7 +101,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 			}
 		}
 	}
-	/**
+	/**1.3.26
 	 * 神级逻辑,当前节点的下一个元素为key值要移动当前节点的下一个的下一个,当前节点下一个元素不为key
 	 * 的要移动到 当前节点的下一个,head节点肯定不为空,但是head.item为空
 	 * @param key
@@ -147,7 +147,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		}
 		return false;
 	}
-	/**
+	/**1.3.24
 	 * 删除指定坐标后的所有节点,从0开始计数
 	 * @param index
 	 */
@@ -323,7 +323,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		}
 		N--;
 	}
-	*//**
+	*//**1.3.20
 	 * 移除指定位置元素,从0开始计数
 	 * @param k
 	 *//*
@@ -363,7 +363,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		}
 		return null;
 	}
-	*//**
+	*//**1.3.21
 	 * 这个单链表是否存在这个元素
 	 * @param linked
 	 * @param key
@@ -379,6 +379,8 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		}
 		return false;
 	}
+	
+	
 
 	@Override
 	public String toString() {
