@@ -101,6 +101,25 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 			}
 		}
 	}
+	/**
+	 * 神级逻辑,当前节点的下一个元素为key值要移动当前节点的下一个的下一个,当前节点下一个元素不为key
+	 * 的要移动到 当前节点的下一个,head节点肯定不为空,但是head.item为空
+	 * @param key
+	 */
+	public void removeAllKey(String key) {
+		if (N ==0) {
+			throw new NoSuchElementException();
+		}
+		Node temp = head;
+		while (temp.next != null) {
+			if (temp.next.item.equals(key)) {
+				temp.next = temp.next.next;
+				N--;
+			}else {
+				temp = temp.next;	
+			}
+		}
+	}
 	
 	public Item get(int index){
 		if (index<0||index> N-1) {
@@ -127,6 +146,27 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 			temp = temp.next;
 		}
 		return false;
+	}
+	/**
+	 * 删除指定坐标后的所有节点,从0开始计数
+	 * @param index
+	 */
+	public void removeAfter(int index){
+		if (index < 0 || index > N-1) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (index == N -1) {
+			return;
+		}
+		Node temp = head;
+		int counter = -1;
+		while (temp != null) {
+			if (index == counter++) {
+				temp.next = null;
+				break;
+			}
+			temp = temp.next;
+		}
 	}
 	
 	@Override
@@ -168,18 +208,24 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 	public static void main(String[] args) {
 		SinglyLinkedList<String> linkedList = new SinglyLinkedList<>();
 		linkedList.add("aaa");
+		linkedList.add("aaa");
+		linkedList.add("aaa");
 		linkedList.add("bbb");
-		linkedList.add("ccc");
-		linkedList.add("ddd");
-		linkedList.add("fff", 1);
-		linkedList.add("eee");
-	    linkedList.remove();
-		linkedList.delete(0);
-		System.out.println(linkedList.N);
+		//linkedList.add("fff", 1);
+		linkedList.add("bbb");
+		//linkedList.add("aaa");
+		//linkedList.add("aaa");
+		//linkedList.add("ccc");
+	    //linkedList.remove();
+		//linkedList.delete(0);
+		System.out.println("之前"+linkedList.N);
+		//System.out.println(linkedList.get(0));
+		//System.out.println(linkedList.find(linkedList, "ccc"));
+		//System.out.println(linkedList.find(linkedList, "eee"));
+		//linkedList.removeAfter(2);
+		linkedList.removeAllKey("aaa");
+		System.out.println("之后"+linkedList.N);
 		System.out.println(linkedList.toString());
-		System.out.println(linkedList.get(0));
-		System.out.println(linkedList.find(linkedList, "ccc"));
-		System.out.println(linkedList.find(linkedList, "eee"));
 	}
 }
 
