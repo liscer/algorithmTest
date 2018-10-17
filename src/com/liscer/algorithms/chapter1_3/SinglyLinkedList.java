@@ -75,6 +75,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		}
 		if (N == 1) {
 			head.next = null;
+			N--;
 		}else {
 			for(Node n = head;n!=null;n = n.next){
 				if (n.next.next==null) {
@@ -209,21 +210,23 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		SinglyLinkedList<String> linkedList = new SinglyLinkedList<>();
 		linkedList.add("aaa");
 		linkedList.add("aaa");
-		linkedList.add("aaa");
-		linkedList.add("bbb");
+		//linkedList.add("aaa");
+		//linkedList.add("bbb");
 		//linkedList.add("fff", 1);
-		linkedList.add("bbb");
+		//linkedList.add("bbb");
 		//linkedList.add("aaa");
 		//linkedList.add("aaa");
 		//linkedList.add("ccc");
+	    linkedList.remove();
+	    linkedList.remove();
 	    //linkedList.remove();
 		//linkedList.delete(0);
-		System.out.println("之前"+linkedList.N);
+		//System.out.println("之前"+linkedList.N);
 		//System.out.println(linkedList.get(0));
 		//System.out.println(linkedList.find(linkedList, "ccc"));
 		//System.out.println(linkedList.find(linkedList, "eee"));
 		//linkedList.removeAfter(2);
-		linkedList.removeAllKey("aaa");
+		//linkedList.removeAllKey("aaa");
 		System.out.println("之后"+linkedList.N);
 		System.out.println(linkedList.toString());
 	}
