@@ -31,7 +31,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 	}
 	
 	public boolean isEmpty() {
-		return head == null;
+		return head.next == null;
 	}
 	
 	public int size(){
@@ -229,6 +229,7 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		//linkedList.removeAllKey("aaa");
 		System.out.println("之后"+linkedList.N);
 		System.out.println(linkedList.toString());
+		System.out.println(linkedList.isEmpty());
 	}
 }
 
