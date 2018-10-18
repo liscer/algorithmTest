@@ -3,7 +3,6 @@ package com.liscer.algorithms.chapter1_3;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
 
 /**
  * 单向链表实现 从后面添加,从后面删除  
@@ -48,14 +47,24 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		N++;
 	}
 	
+	public void addhead(Item item) {
+		Node node = new Node(item);
+		node.next = head.next;
+		head.next = node;
+	}
+	/**
+	 * 节点后增加
+	 * @param item
+	 * @param index
+	 */
 	public void add(Item item,int index){
 		if (index < 0 || index > N -1) {
 			throw new IndexOutOfBoundsException();
 		}else {
-			Node temp = head;
+			Node temp = head;//游标跟移动是同时的
 			int counter = -1;
 			while (temp != null) {
-				if ((index-1) == counter++) {
+				if (index == counter++) {
 					Node node = new Node(item);
 					Node back = temp.next;
 					temp.next = node;
@@ -64,7 +73,6 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 					return;
 				}
 				temp = temp.next;
-		
 			}
 		}
 	}
@@ -209,16 +217,16 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 	public static void main(String[] args) {
 		SinglyLinkedList<String> linkedList = new SinglyLinkedList<>();
 		linkedList.add("aaa");
-		linkedList.add("aaa");
 		//linkedList.add("aaa");
-		//linkedList.add("bbb");
+		//linkedList.add("aaa");
+		linkedList.add("bbb");
 		//linkedList.add("fff", 1);
 		//linkedList.add("bbb");
 		//linkedList.add("aaa");
 		//linkedList.add("aaa");
-		//linkedList.add("ccc");
-	    linkedList.remove();
-	    linkedList.remove();
+		linkedList.add("ccc");
+	    //linkedList.remove();
+	    //linkedList.remove();
 	    //linkedList.remove();
 		//linkedList.delete(0);
 		//System.out.println("之前"+linkedList.N);
@@ -228,8 +236,10 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 		//linkedList.removeAfter(2);
 		//linkedList.removeAllKey("aaa");
 		System.out.println("之后"+linkedList.N);
+		linkedList.add("ddd", 2);
 		System.out.println(linkedList.toString());
-		System.out.println(linkedList.isEmpty());
+		//System.out.println(linkedList.isEmpty());
+		//System.out.println(linkedList.find(linkedList, "aaa"));
 	}
 }
 
