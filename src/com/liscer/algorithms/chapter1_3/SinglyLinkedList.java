@@ -125,17 +125,17 @@ public class SinglyLinkedList<Item> implements Iterable<Item>{
 	
 	public static void main(String[] args) {
 		SinglyLinkedList<String> linkedList = new SinglyLinkedList<>();
-		linkedList.add("aaa");
 		//linkedList.add("aaa");
 		//linkedList.add("aaa");
-		linkedList.add("bbb");
+		//linkedList.add("aaa");
+		//linkedList.add("bbb");
 		//linkedList.add("fff", 1);
 		//linkedList.add("bbb");
 		//linkedList.add("aaa");
 		//linkedList.add("aaa");
-		linkedList.add("ccc");
+		//linkedList.add("ccc");
 		 //linkedList.remove();
-		linkedList.add("aaa");
+		//linkedList.add("aaa");
 		 //linkedList.remove();
 		 //linkedList.remove();
 		linkedList.delete(3);
