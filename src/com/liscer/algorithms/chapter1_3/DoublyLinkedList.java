@@ -1,5 +1,7 @@
 package com.liscer.algorithms.chapter1_3;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 /**
  * 双向链表有头和尾,头和尾都是链表中的元素
@@ -28,6 +30,9 @@ public class DoublyLinkedList<Item> {
 			this.prev = prev;
 			this.next = next;
 		}
+		public Node(Item item) {
+			this(null, item, null);
+		}
 	}
 	
 	public boolean isEmpty(){
@@ -36,6 +41,26 @@ public class DoublyLinkedList<Item> {
 	
 	public int size(){
 		return N;
+	}
+	
+	public void addFirst1(Item item){
+		linkFirst(item);
+	}
+	/**
+	 * 这个思路很难掌握呀 ,先记住第一个,初始化新加入节点,新节点为first,第一次插入节点last也是新加入节点
+	 * 不是第一次添加,修改以前的头结点的前驱为新节点
+	 * @param item
+	 */
+	private void linkFirst(Item item){
+		Node<Item> f = first;
+		Node<Item> newNode = new Node<>(null, item, f);
+		first = newNode;
+		if (f == null) {
+			last = newNode;
+		} else {
+			f.prev = newNode;
+		}
+		N++;
 	}
 	
 	public void addLast(Item item) {
@@ -122,6 +147,13 @@ public class DoublyLinkedList<Item> {
 		}
 	}
 	
+	public Item get(int index){
+		if (index < 0 || index > N-1) {
+			throw new IndexOutOfBoundsException("out");
+		}
+		return node(index).item;
+	}
+	
 	public void addFirst(Item item) {
 		Node<Item> node = new Node<>(item);
 		if (N == 0) {
@@ -133,6 +165,113 @@ public class DoublyLinkedList<Item> {
 			this.first = node;
 		}
 		N++;
+	}
+	
+	public boolean contains(Object o){
+		return indexOf(o)!= -1;
+	}
+	
+	/**
+	 * 根据对象获得匹配的第一个索引,对象可以是null,从头遍历找
+	 * @param o
+	 * @return
+	 */
+	public int indexOf(Object o){
+		int index=0;
+		if (o == null) {
+			for (Node<Item> current = first;current!=null;current = current.next) {
+				if (current.item == null) {
+					return index;
+				}
+				index++;
+			}
+		}else {
+			for(Node<Item> current = first;current!=null;current = current.next){
+				if (current.item.equals(o)) {
+					return index;
+				}
+				index++;
+			}
+		}
+		return -1;
+	}
+	/**
+	 * 根据对象获得匹配的第一个索引,对象可以是null,从尾遍历找
+	 * @param o
+	 * @return
+	 */
+	public int lastIndexOf(Object o){
+		int index=N;
+		if (o == null) {
+			for (Node<Item> current = last;current!=null;current = current.prev) {
+				index--;
+				if (current.item == null) {
+					return index;
+				}
+			}
+		}else {
+			for(Node<Item> current = last;current!=null;current = current.prev){
+				index--;
+				if (current.item.equals(o)) {
+					return index;
+				}
+			}
+		}
+		return -1;
+	}
+	/**
+	 * 删除第一个节点实现方法,
+	 * @param f
+	 * @return 返回删除的节点元素
+	 */
+	private Item unlinkFirst(Node<Item> f){
+		final Item item = f.item;
+		final Node<Item> next = f.next;
+		f.item = null;//消除游离,帮助垃圾回收器回收
+		f.next = null;
+		first = next;//如果只剩一个节点删除,他的下一个是null,first也就是空了
+		if (next == null) {//如果first为空那么last也为null
+			last = null;
+		}else {//否则切断第二个节点的前驱
+			next.prev = null;
+		}
+		N--;
+		return item;
+	}
+	
+	public Item removeFirst(){
+		final Node<Item> f = first;
+		if (f==null) {
+			throw new NoSuchElementException();
+		}
+		return unlinkFirst(f);
+	}
+	
+	public Item removeLast() {
+		final Node<Item> l = last;
+		if (l == null) {
+			throw new NoSuchElementException();
+		}
+		return unlinkLast(l);
+	}
+	/**
+	 * 删除最后一个节点
+	 * @param l
+	 * @return
+	 */
+	private Item unlinkLast(Node<Item> l){
+		final Item item = l.item;
+		final Node<Item> prev = l.prev;
+		l.item = null;
+		l.prev = null;
+		last = prev;
+		if (prev == null) {
+			first = prev;
+		}else {
+			prev.next = null;
+		}
+		N--;
+		return item;
 	}
 	
 	public void remove() {
@@ -193,10 +332,62 @@ public class DoublyLinkedList<Item> {
 			current.next.prev = current.prev;
 		}
 		N--;
-		System.out.println("我厉害吧,我删除了一个节点他是: " + current.item);
+		System.out.println("我删除了一个节点他是: " + current.item);
+	}
+	/**
+	 * 官方代码写的真NB,两个ifelse解决了指针指向和游离,更厉害的是,首尾删除和中间删除有重合操作,删头节点的前驱为空可以
+	 * 通过第二个ifelse解决,删除尾节点的后驱为空可以通过第一个ifelse解决.删除中间节点在两个else里完成
+	 * @param x
+	 * @return 删除节点元素
+	 */
+	Item unlink(Node<Item> x){
+		final Item item = x.item;
+		final Node<Item> next= x.next;
+		final Node<Item> prev = x.prev;
+		if (prev ==null) {
+			first = next;
+		}else {
+			prev.next = next;
+			x.prev = null;
+		}
+		if (next ==null) {
+			last = prev;
+		} else {
+			next.prev = prev;
+			x.next = null;
+		}
+		x.item = null;
+		N--;
+		return item;
 	}
 	
-	public Item get(int index){
+	public boolean delete2(Object o) {
+		if (o == null) {
+			for(Node<Item> current = first;current != null;current = current.next){
+				if (current.item == null) {
+					unlink(current);
+					return true;
+				}
+			}
+		}else {
+			for(Node<Item> current = first;current != null;current = current.next){
+				if (current.item.equals(o)) {
+					unlink(current);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public Item delete1(int index){
+		if (index < 0 || index > N-1) {
+			throw new IndexOutOfBoundsException();
+		}
+		return unlink(node(index));
+	}
+	
+	public Item get1(int index){
 		if (index < 0 || index > N -1) {
 			throw new IndexOutOfBoundsException("越界了");
 		}
@@ -239,6 +430,14 @@ public class DoublyLinkedList<Item> {
 //		System.out.println(linked.toString());
 		System.out.println(500 >> 3);
 		System.out.println(-500/8);
+		List<String> lists = new LinkedList<>();
+		lists.add("aaa");
+		lists.add("bbb");
+		lists.add("ccc");
+		lists.remove(0);
+		lists.remove(0);
+		System.out.println(lists.toString());
+		//System.out.println(lists.get(0));
 	}
 
 }
