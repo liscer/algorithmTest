@@ -1,5 +1,6 @@
 package com.liscer.algorithms.chapter1_3;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -400,6 +401,52 @@ public class DoublyLinkedList<Item> {
 		}
 		return null;
 	}
+	/**
+	 * 将集合从指定位置开始插入,第一种情况,尾部插入.第二种情况头中部插入
+	 * 1.检查index范围是否在size之内
+		2.toArray()方法把集合的数据存到对象数组中
+		3.得到插入位置的前驱和后继节点
+		4.遍历数据，将数据插入到指定位置
+	 * @param index
+	 * @param c
+	 * @return
+	 */
+	public boolean addAll(int index,Collection<? extends Item> c) {
+		if (index < 0 || index > N) {
+			throw new IndexOutOfBoundsException();
+		}
+		Object[] o = c.toArray();
+		int numnew = o.length;
+		if(numnew == 0){
+			return false;
+		}
+		Node<Item> pred,nextd;//得到插入位置的前驱后驱
+		if (index == N) {//如果插入位置是尾部,前驱是last,后驱为null;
+			pred = last;
+			nextd = null;
+		}else {			//否则调用node(index)得到后驱节点
+			nextd = node(index);
+			pred = nextd.prev;//前驱节点是后驱节点的prev
+		}
+		for (Object object : o) {
+			Item item = (Item) object;
+			Node<Item> newNode = new Node<>(pred, item, null);//初始化就已经完成新节点的前驱
+			if (pred == null) {//如果插入位置是头部
+				first = newNode;
+			}else {//前置节点的下一个是新节点
+				pred.next = newNode;
+			}
+			pred = newNode;//将前置节点指向新节点进行下一次循环
+		}
+		if (nextd ==null) {//如果是尾部插入
+			last = pred;
+		}else {				//插入链表与原来的链表连接
+			pred.next = nextd;
+			nextd.prev = pred;
+		}
+		N += numnew;
+		return true;
+	}
 	
 	@Override
 	public String toString() {
@@ -428,16 +475,6 @@ public class DoublyLinkedList<Item> {
 //		linked.delete(3);
 //		System.out.println(linked.N);
 //		System.out.println(linked.toString());
-		System.out.println(500 >> 3);
-		System.out.println(-500/8);
-		List<String> lists = new LinkedList<>();
-		lists.add("aaa");
-		lists.add("bbb");
-		lists.add("ccc");
-		lists.remove(0);
-		lists.remove(0);
-		System.out.println(lists.toString());
-		//System.out.println(lists.get(0));
 	}
 
 }
